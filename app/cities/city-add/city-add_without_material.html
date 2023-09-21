@@ -1,0 +1,83 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title> Create A New City</mat-card-title>
+      <mat-card-subtitle>
+        A new city is added to the tours package</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()">
+        <div>
+          <input
+            type="text"
+            #name="ngModel"
+            [(ngModel)]="newCity.name"
+            value=""
+            name="name"
+            placeholder="Enter the City Name"
+            required
+            minlength="3"
+            pattern="^[A-Za-z]+$"
+          />
+        </div>
+        <!-- check Validation conditions and display error message -->
+        <ul style="color: red" *ngIf="name.dirty && name.invalid">
+          <li *ngFor="let item of getValidationMessages(name)">
+            {{item}}
+          </li>
+          </ul>
+        <div>
+  
+        </div>
+        <div>
+          <input
+            type="text"
+            [(ngModel)]="newCity.lon"
+            value=""
+            name="Longitude"
+            placeholder="Enter the Longitude"
+            pattern="[0-9]+.[0-9]+"
+            #Longitude="ngModel"
+            required
+          />
+        </div>
+        <div>
+          <ul style="color: red" *ngIf="Longitude.dirty && Longitude.invalid">
+            <li *ngFor="let item of getValidationMessages(Longitude)">
+              {{item}}
+            </li>
+            </ul>
+        </div>
+        <div>
+          <input
+            type="number"
+            [(ngModel)]="newCity.lat"
+            value=""
+            name="Latitude"
+            placeholder="Enter the Latitude"
+            pattern="[0-9]+.[0-9]+"
+            #Latitude="ngModel"
+            required
+          />
+        </div>
+        
+        <div>
+          <ul style="color: red" *ngIf="Latitude.dirty && Latitude.invalid">
+            <li *ngFor="let item of getValidationMessages(Latitude)">
+              {{item}}
+            </li>
+            </ul>
+        </div>
+       <div>
+       </div>
+        <div>
+          <button mat-raised-button color="accent" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  
+  Added City : {{ cityJSON }}
+  

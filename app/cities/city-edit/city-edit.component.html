@@ -1,0 +1,77 @@
+<button mat-icon-button (click)="onBack()" >
+  <mat-icon aria-label="label">arrow_back</mat-icon>
+</button>
+<div class="matcarddiv">
+  <ng-container *ngIf="!city; else dataLoaded">
+    <div class="spinner-container">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </ng-container>
+
+  <ng-template #dataLoaded>
+<mat-card>
+    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-actions>
+      <form [formGroup]="cityForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <mat-label>Name : </mat-label>
+          <input matInput formControlName="name" name="name" required placeholder="Enter the City Name">
+          <mat-error *ngIf="this.cityForm.controls['name'].errors?.['required']">
+            Name is required
+          </mat-error>
+          <mat-error *ngIf="this.cityForm.controls['name'].errors?.['pattern']">
+            Name consists of illegal character
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Cost : </mat-label>
+            <input matInput formControlName="cost" required placeholder="Enter the Cost">
+            <mat-error *ngIf="this.cityForm.controls['cost'].errors?.['required']">
+              Cost is required
+            </mat-error>
+            <mat-error *ngIf="this.cityForm.controls['cost'].errors?.['pattern']">
+              Cost consists of illegal character
+            </mat-error>
+          </mat-form-field>
+          <!-- <mat-form-field>
+            <mat-label>Longitude : </mat-label>
+            <input matInput formControlName="lon" required placeholder="Enter the Longitude">
+            <mat-error *ngIf="this.cityForm.controls['lon'].errors?.['required']">
+                Longitude is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Latitude : </mat-label>
+            <input matInput formControlName="lat" required placeholder="Enter the Latitude">
+            <mat-error *ngIf="this.cityForm.controls['lat'].errors?.['required']">
+              Latitude is required
+            </mat-error>
+          </mat-form-field> -->
+        <mat-form-field>
+            <mat-label>Rating : </mat-label>
+            <input matInput formControlName="rating" range required placeholder="Enter the Rating">
+            <mat-error *ngIf="this.cityForm.controls['rating'].errors?.['required']">
+              Rating is required
+            </mat-error>
+            <mat-error *ngIf="this.cityForm.controls['rating'].errors?.['pattern']">
+              Rating consists of illegal character
+            </mat-error>
+            <mat-error *ngIf="this.cityForm.controls['rating'].errors?.['range']">
+                Rating Range exceeded
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Date of Journey : </mat-label>
+            <input matInput type="date" formControlName="doj" required placeholder="Enter the Date">
+            <mat-error *ngIf="this.cityForm.controls['doj'].errors?.['required']">
+              Date is required
+            </mat-error>
+          </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">Update</button>
+      </form>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>
+</div>

@@ -1,0 +1,158 @@
+<div class="matcarddiv">
+  <mat-card class="mat-elevation-z3">
+    <mat-card-header>
+      <mat-card-title> Create A New City</mat-card-title>
+      <mat-card-subtitle>
+        A new city is added to the tours package</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <form
+        (ngSubmit)="submitForm(form)"
+        novalidate
+        autocomplete="off"
+        #form="ngForm"
+      >
+        <div style="color: red" *ngIf="formSubmitted && form.invalid">
+          There are problems in the form
+          <ul>
+            <li *ngFor="let error of getFormValidatedMessages(form)">
+              {{ error }}
+            </li>
+          </ul>
+        </div>
+        <mat-form-field matInput>
+          <input
+            matInput
+            type="text"
+            #name="ngModel"
+            [(ngModel)]="newCity.name"
+            value=""
+            name="name"
+            placeholder="Enter the City Name"
+            required
+            minlength="3"
+            pattern="^[A-Za-z]+$"
+          />
+        </mat-form-field>
+
+        <!-- check Validation conditions and display error message -->
+        <ul style="color: red" *ngIf="name.dirty && name.invalid">
+          <li *ngFor="let item of getValidationMessages(name)">
+            {{ item }}
+          </li>
+        </ul>
+        <div></div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="newCity.lon"
+            value=""
+            name="Longitude"
+            placeholder="Enter the Longitude"
+            pattern="[0-9]+.[0-9]+"
+            #Longitude="ngModel"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <ul style="color: red" *ngIf="Longitude.dirty && Longitude.invalid">
+            <li *ngFor="let item of getValidationMessages(Longitude)">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="newCity.lat"
+            value=""
+            name="Latitude"
+            placeholder="Enter the Latitude"
+            pattern="[0-9]+.[0-9]+"
+            #Latitude="ngModel"
+            required
+          />
+        </mat-form-field>
+
+        <div>
+          <ul style="color: red" *ngIf="Latitude.dirty && Latitude.invalid">
+            <li *ngFor="let item of getValidationMessages(Latitude)">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <mat-form-field>
+          <input
+            matInput
+            
+            type="number"
+            [(ngModel)]="newCity.rating"
+            name="rating"
+            placeholder="Enter the Rating"
+            required
+            min="1"
+            max="5"
+            #rating="ngModel"
+          />
+        </mat-form-field>
+        <div>
+          <ul style="color: red" *ngIf="rating.dirty && rating.invalid">
+            <li *ngFor="let item of getValidationMessages(rating)">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <mat-form-field>
+          <input
+            matInput
+            type="date"
+            [(ngModel)]="newCity.doj"
+            name="doj"
+            placeholder="Enter the Date of Journey"
+            required
+            #doj="ngModel"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="newCity.cost"
+            name="cost"
+            placeholder="Enter the Cost"
+            required
+            #cost="ngModel"
+          />
+        </mat-form-field>
+        <div>
+          <ul style="color: red" *ngIf="cost.dirty && cost.invalid">
+            <li *ngFor="let item of getValidationMessages(cost)">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <mat-form-field *ngIf="states.length > 0">
+          <mat-label>Select a State</mat-label>
+          <mat-select placeholder="placeholder">
+            <mat-option *ngFor="let state of states" [value]="state">{{
+              state
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div>
+          <button mat-raised-button color="accent" type="submit">Submit</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+Added City : {{ cityJSON }}

@@ -1,0 +1,48 @@
+<!-- <button (click)="onBack()" mat-raised-button style="margin: 10px 10px;" color="accent">Back</button> -->
+
+<button mat-icon-button (click)="onBack()">
+  <mat-icon aria-label="label">arrow_back</mat-icon>
+</button>
+
+<ng-container *ngIf="!city; else cardDiv">
+  <div class="spinner-container">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-container>
+<ng-template #cardDiv>
+  <div class="carddiv">
+    <mat-card class="mat-elevation-z3">
+      <div class="imageDiv">
+        <img
+          mat-card-lg-image
+          src="https://via.placeholder.com/200?text={{ city.name }}"
+        />
+      </div>
+      <div>
+        <mat-card-title
+          ><em>{{ city.name | uppercase }}</em></mat-card-title
+        >
+        <app-star [rating]="city.rating"></app-star>
+        <mat-card-subtitle
+
+         [ngClass]="getClasses()"
+          >Cost of Travelling :
+          <em>{{ city.cost | currency : "INR" }}</em></mat-card-subtitle
+        >
+
+        <mat-card-subtitle>Latitude : {{ city.lat }}</mat-card-subtitle>
+        <mat-card-subtitle>Longitude : {{ city.lon }}</mat-card-subtitle>
+        <mat-card-subtitle
+          >Date of Journey :
+          {{ city.doj | date : "mediumDate" }}</mat-card-subtitle
+        >
+        <div>
+          <mat-card-actions>
+            <button mat-button color="accent" [routerLink]="['/cities/edit',city.id]">Edit</button>
+            <button mat-button color="red" (click)="deleteCity()">Delete</button>
+          </mat-card-actions>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</ng-template>

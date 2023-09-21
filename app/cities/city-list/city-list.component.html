@@ -1,0 +1,82 @@
+
+
+<mat-toolbar color="primary" class="mat-elevation-z3">
+  <span class="spacer"></span>
+  <span>{{ title }}</span>
+  <span class="spacer"></span>
+</mat-toolbar>
+
+<div>
+  <h1>Selected City : {{selectedCity || 'None'}}</h1>
+</div>
+<div class="tableContainer">
+
+  <ng-container *ngIf="cities.length<1 ; else tableData">
+    <div class="spinner-container">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </ng-container>
+  <ng-template #tableData>
+      <mat-table [dataSource]="cities | sort" class="mat-elevation-z3 fullWidth">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let city"> {{ city.id }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+      <mat-cell *matCellDef="let city"  > <a [routerLink]="['/cities',city.id]" routerLinkActive="router-link-active">{{ city.name | uppercase }} </a></mat-cell>
+      
+    </ng-container>
+
+    <ng-container matColumnDef="lat">
+      <mat-header-cell *matHeaderCellDef> Latitude</mat-header-cell>
+      <mat-cell *matCellDef="let city"> {{ city.lat | number :'1.2-3'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lon">
+      <mat-header-cell *matHeaderCellDef> Longitude</mat-header-cell>
+      <mat-cell *matCellDef="let city"> {{ city.lon}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="doj">
+        <mat-header-cell *matHeaderCellDef> Date of Journey</mat-header-cell>
+        <mat-cell *matCellDef="let city"> {{ city.doj | date:'mediumDate' }} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="cost">
+        <mat-header-cell *matHeaderCellDef>Cost</mat-header-cell>
+        <mat-cell *matCellDef="let city"> {{ city.cost | currency:'INR':'symbol':'1.2' }} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="rating">
+      <mat-header-cell *matHeaderCellDef> Rating</mat-header-cell>
+      <mat-cell *matCellDef="let city">
+        <app-star [rating]="city.rating" (ratingClicked)="handleOnRatingClicked($event)"></app-star>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef> Edit</mat-header-cell>
+      <mat-cell *matCellDef="let city">
+        <button [routerLink]="['/cities/edit',city.id]" mat-icon-button><mat-icon>edit</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef> Delete</mat-header-cell>
+      <mat-cell *matCellDef="let city">
+        <button mat-icon-button (click)="deleteCity(city.id)"><mat-icon>delete</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row
+      *matHeaderRowDef="['id', 'name', 'lat', 'lon', 'rating','doj','cost','edit','delete']"
+    ></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: ['id', 'name', 'lat', 'lon', 'rating','doj','cost','edit','delete']"
+      (mouseover)="getSelected(row)"
+    ></mat-row>
+  </mat-table>
+</ng-template>
+
+</div>
+
+<p>{{message}}</p>
